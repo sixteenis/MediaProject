@@ -6,44 +6,46 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SameMovieCollectionViewCell: UICollectionViewCell {
-    let profileImage = UIImageView()
+    let postImage = UIImageView()
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpHierarch()
         setUpLayout()
         setUpUI()
-        backgroundColor = .darkGray
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     // MARK: - connect 부분
     func setUpHierarch() {
-        contentView.addSubview(profileImage)
+        contentView.addSubview(postImage)
     }
-//    override func layoutSublayers(of layer: CALayer) {
-//        super.layoutSublayers(of: layer)
-//        contentView.layer.cornerRadius = contentView.frame.width / 2
-//    }
+    override func layoutSublayers(of layer: CALayer) {
+        super.layoutSublayers(of: layer)
+        
+        postImage.layer.cornerRadius = 15
+    }
     // MARK: - Layout 부분
     func setUpLayout() {
-        profileImage.snp.makeConstraints { make in
+        postImage.snp.makeConstraints { make in
             make.edges.equalTo(contentView.safeAreaLayoutGuide)
         }
     }
     
     // MARK: - UI 세팅 부분 (정적)
     func setUpUI() {
-        contentView.clipsToBounds = true
-        
-        contentView.backgroundColor = .red
+//        contentView.clipsToBounds = true
+//        contentView.backgroundColor = .white
+        postImage.clipsToBounds = true
+        postImage.contentMode = .scaleAspectFill
     }
     
     // MARK: - 동적인 세팅 부분
-//    func setUpData(_ data: String, select: Bool) {
-//        profileImage.selectedProfile(data, select: select)
-//
-//    }
+    func setUpData(_ image: String) {
+        let url = URL(string: "http://image.tmdb.org/t/p/w500\(image)")!
+        postImage.kf.setImage(with: url)
+    }
 }
