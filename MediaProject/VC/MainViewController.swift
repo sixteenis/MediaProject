@@ -39,6 +39,7 @@ class MainViewController: UIViewController {
     // MARK: - UI 세팅 부분
     func setUpUI() {
         view.backgroundColor = .white
+        navigationItem.title = "오늘의 영화 순위"
         
         movieTableView.backgroundColor = .white
     }
@@ -72,7 +73,6 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(#function)
         return movieList.count
     }
     
@@ -80,8 +80,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         let cell = movieTableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.id, for: indexPath) as! MovieTableViewCell
         let data = movieList[indexPath.row]
         cell.setUpData(data: data)
-        print(#function)
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = RecommendedMovieViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     

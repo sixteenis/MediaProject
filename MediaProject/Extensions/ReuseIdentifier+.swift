@@ -15,6 +15,5 @@ extension ReuseIdentifierProtocol {
     }
 }
 
-extension UITableViewCell: ReuseIdentifierProtocol{}
-extension UITableView: ReuseIdentifierProtocol{}
-extension UIViewController: ReuseIdentifierProtocol{}
+extension UIView: ReuseIdentifierProtocol{}
+
