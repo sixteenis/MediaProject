@@ -39,7 +39,7 @@ class MainViewController: UIViewController {
     // MARK: - UI 세팅 부분
     func setUpUI() {
         view.backgroundColor = .white
-        navigationItem.title = "오늘의 영화 순위"
+        navigationItem.title = "영화 순위"
         
         movieTableView.backgroundColor = .white
     }
@@ -86,7 +86,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = RecommendedMovieViewController()
         vc.movieid = movieList[indexPath.row].id
-        
+        vc.navTitle = movieList[indexPath.row].title
         navigationController?.pushViewController(vc, animated: true)
     }
     

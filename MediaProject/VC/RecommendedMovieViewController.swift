@@ -8,6 +8,8 @@
 import UIKit
 
 import SnapKit
+
+@MainActor
 class RecommendedMovieViewController: UIViewController {
     private let sameTitle = UILabel()
     private let sameCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
@@ -48,6 +50,7 @@ class RecommendedMovieViewController: UIViewController {
         }
     }
     lazy var movieid = 0
+    lazy var navTitle = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpHierarch()
@@ -58,6 +61,7 @@ class RecommendedMovieViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         network.callRequset(moveId: movieid, moiveFilter: .same) { movies in
             guard let result = movies else { return }
             self.sameMovieList = result
@@ -117,7 +121,7 @@ class RecommendedMovieViewController: UIViewController {
     
     // MARK: - UI 세팅 부분
     func setUpUI() {
-        navigationItem.title = "극한직업"
+        navigationItem.title = navTitle
         
         view.backgroundColor = .gray
         

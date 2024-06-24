@@ -13,6 +13,7 @@ enum FilterNetworkStyle: String{
     case recommend = "recommendations"
     case poster = "images"
 }
+
 class MovieNetwork {
     static let shard = MovieNetwork()
     
@@ -34,8 +35,9 @@ class MovieNetwork {
                 case .success(let value):
                     completionHandler(value.results)
                     
-                case .failure(let error):
+                case .failure(_):
                     //실패 경우
+                    
                     completionHandler(nil)
                 }
             }
@@ -56,14 +58,10 @@ class MovieNetwork {
                 case .success(let value):
                     completionHandler(value.posters)
                     
-                case .failure(let error):
+                case .failure(_):
                     //실패 경우
                     completionHandler(nil)
                 }
             }
     }
-    // MARK: - 통신 성공 핸들링 부분
-//    func succesNetWork(data: <#객체#>) {
-//        //네트워크 성공 시 핸들링
-//    }
 }
