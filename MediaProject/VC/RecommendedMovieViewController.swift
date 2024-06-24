@@ -22,12 +22,18 @@ class RecommendedMovieViewController: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         return layout
     }
+    
+    
+    
+    let network = MoveNetwork.shard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpHierarch()
         setUpLayout()
         setUpUI()
         setUpCollection()
+        network.callRequset(moveId: 1022789, moiveFilter: .same)
     }
     
     // MARK: - connect 부분

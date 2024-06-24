@@ -82,8 +82,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         cell.setUpData(data: data)
         return cell
     }
+    // MARK: - 추천 뷰로 이동
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = RecommendedMovieViewController()
+        print(movieList[indexPath.row].id)
         navigationController?.pushViewController(vc, animated: true)
     }
     
