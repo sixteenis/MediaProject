@@ -36,8 +36,7 @@ class MovieNetwork {
                     completionHandler(value.results)
                     
                 case .failure(_):
-                    //실패 경우
-                    
+                    //실패 경우ㅌ₩ㅌ
                     completionHandler(nil)
                 }
             }
@@ -57,6 +56,7 @@ class MovieNetwork {
                 switch respons.result{
                 case .success(let value):
                     completionHandler(value.posters)
+                    
                     
                 case .failure(_):
                     //실패 경우

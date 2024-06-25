@@ -147,22 +147,15 @@ class MovieTableViewCell: UITableViewCell {
     // MARK: - 동적인 세팅 부분
     func setUpData(data: Movie) {
         dateLabel.text = data.release_date
-        
-        
-    //http://image.tmdb.org/t/p/w500/nv6F6tz7r61DUhE7zgHwLJFcTYp.jpg
         let url = URL(string: "http://image.tmdb.org/t/p/w500\(data.poster_path)")!
-        //print(url)
-        //http://image.tmdb.org/t/p/w500/sh7Rg8Er3tFcN9BpKIPOMvALgZd.jpg
         mainImage.kf.setImage(with: url)
-        //mainImage.image = UIImage(data: <#T##Data#>)
-        //mainImage.image = UIImage(systemName: "heart")
         voteNum.text = String(format: "%.1f", data.vote_average)
         
         mainTitle.text = data.title
         
         overviewTitle.text = data.overview
         
-        
+    
     }
 
 }

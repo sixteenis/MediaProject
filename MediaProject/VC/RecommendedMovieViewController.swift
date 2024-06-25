@@ -9,113 +9,88 @@ import UIKit
 
 import SnapKit
 
-@MainActor
 class RecommendedMovieViewController: UIViewController {
-    private let sameTitle = UILabel()
-    private let sameCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
-    
-    private let recommendTitle = UILabel()
-    private let recommendCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
-    
-    private let postTitle = UILabel()
-    private let postCollectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout())
-    
-    static func collectionViewLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewFlowLayout()
-        let height = UIScreen.main.bounds.height / 4
-        layout.itemSize = CGSize(width: height/2, height: height/1.2)
-        layout.scrollDirection = .horizontal
-        layout.minimumLineSpacing = 20
-        layout.minimumInteritemSpacing = 20
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        return layout
-    }
-    
-    
-    
-    let network = MovieNetwork.shard
-    lazy var sameMovieList: [RecommendMovies] = [] {
-        didSet {
-            sameCollectionView.reloadData()
-        }
-    }
-    lazy var recommendMovieList: [RecommendMovies] = [] {
-        didSet {
-            recommendCollectionView.reloadData()
-        }
-    }
-    lazy var postMovieList: [Posts] = [] {
-        didSet {
-            postCollectionView.reloadData()
-        }
-    }
+    private lazy var tableView = {
+        let view = UITableView()
+        view.delegate = self
+        view.dataSource = self
+        view.rowHeight = 200
+        view.register(SameMovieTableViewCell.self, forCellReuseIdentifier: SameMovieTableViewCell.id)
+        return view
+    }()
     lazy var movieid = 0
     lazy var navTitle = ""
+    var imageList: [[String]] = [[],[],[]]
+    let titleList = ["비슷한 영화", "추천 영화", "포스터"]
+    
+    let network = MovieNetwork.shard
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(movieid)
         setUpHierarch()
         setUpLayout()
         setUpUI()
         setUpCollection()
+        callNetwork()
         
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func callNetwork() {
+        let group = DispatchGroup()
+        //1
+        group.enter()
+        DispatchQueue.global().async {
+            self.network.callRequset(moveId: self.movieid, moiveFilter: .same) { data in
+                if let data = data {
+                    // MARK: - 지금은 추가로 넣지만 나중에는 교체해주는 것도 생각해야됨~
+                    data.forEach{ i in
+                        self.imageList[0].append(i.poster_path)
+                    }
+                }
+                group.leave()
+            }
+        }
+        //2
+        group.enter()
+        DispatchQueue.global().async {
+            self.network.callRequset(moveId: self.movieid, moiveFilter: .recommend) { data in
+                if let data = data {
+                    // MARK: - 지금은 추가로 넣지만 나중에는 교체해주는 것도 생각해야됨~
+                    data.forEach{ i in
+                        self.imageList[1].append(i.poster_path)
+                    }
+                }
+                group.leave()
+            }
+        }
+        //3
+        group.enter()
+        DispatchQueue.global().async {
+            self.network.callRequsetPost(moveId: self.movieid, moiveFilter: .poster) { data in
+                if let data = data {
+                    data.forEach{ i in
+                        self.imageList[2].append(i.file_path)
+                    }
+                }
+                group.leave()
+            }
+        }
         
-        network.callRequset(moveId: movieid, moiveFilter: .same) { movies in
-            guard let result = movies else { return }
-            self.sameMovieList = result
-            //print(self.sameMovieList)
+        group.notify(queue: .main){
+            self.tableView.reloadData()
         }
-        network.callRequset(moveId: movieid, moiveFilter: .recommend) { movies in
-            guard let result = movies else { return }
-            self.recommendMovieList = result
-            //print(self.sameMovieList)
-        }
-        network.callRequsetPost(moveId: movieid, moiveFilter: .poster) { movies in
-            guard let result = movies else { return }
-            self.postMovieList = result
-        }
+        
     }
     
     // MARK: - connect 부분
     func setUpHierarch() {
-        view.addSubview(sameTitle)
-        view.addSubview(sameCollectionView)
-        view.addSubview(recommendTitle)
-        view.addSubview(recommendCollectionView)
-        view.addSubview(postTitle)
-        view.addSubview(postCollectionView)
+        view.addSubview(tableView)
+
     }
     
     // MARK: - Layout 부분
     func setUpLayout() {
-        sameTitle.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).inset(20)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
-        }
-        sameCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(sameTitle.snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(160)
-        }
-        recommendTitle.snp.makeConstraints { make in
-            make.top.equalTo(sameCollectionView.snp.bottom).offset(20)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
-        }
-        recommendCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(recommendTitle.snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(160)
-        }
-        postTitle.snp.makeConstraints { make in
-            make.top.equalTo(recommendCollectionView.snp.bottom).offset(20)
-            make.leading.equalTo(view.safeAreaLayoutGuide).inset(10)
-        }
-        postCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(postTitle.snp.bottom).offset(10)
-            make.horizontalEdges.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(160)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
     
@@ -125,38 +100,8 @@ class RecommendedMovieViewController: UIViewController {
         
         view.backgroundColor = .gray
         
-        sameTitle.text = "추천 영화"
-        sameTitle.font = .systemFont(ofSize: 20, weight: .bold)
-        
-        recommendTitle.text = "비슷한 영화"
-        recommendTitle.font = .systemFont(ofSize: 20, weight: .bold)
-        
-        postTitle.text = "포스터"
-        postTitle.font = .systemFont(ofSize: 20, weight: .bold)
-        
-        
     }
     func setUpCollection() {
-        sameCollectionView.dataSource = self
-        sameCollectionView.delegate = self
-        sameCollectionView.register(SameMovieCollectionViewCell.self, forCellWithReuseIdentifier: SameMovieCollectionViewCell.id)
-        sameCollectionView.backgroundColor = .gray
-        sameCollectionView.showsHorizontalScrollIndicator = false
-        sameCollectionView.tag = 0
-        
-        recommendCollectionView.dataSource = self
-        recommendCollectionView.delegate = self
-        recommendCollectionView.register(SameMovieCollectionViewCell.self, forCellWithReuseIdentifier: SameMovieCollectionViewCell.id)
-        recommendCollectionView.backgroundColor = .gray
-        recommendCollectionView.showsHorizontalScrollIndicator = false
-        recommendCollectionView.tag = 1
-        
-        postCollectionView.dataSource = self
-        postCollectionView.delegate = self
-        postCollectionView.register(SameMovieCollectionViewCell.self, forCellWithReuseIdentifier: SameMovieCollectionViewCell.id)
-        postCollectionView.backgroundColor = .gray
-        postCollectionView.showsHorizontalScrollIndicator = false
-        postCollectionView.tag = 2
     }
     // MARK: - 동적 UI 세팅 부분
     func setUpDynamicUI() {
@@ -164,42 +109,35 @@ class RecommendedMovieViewController: UIViewController {
     }
     
 }
-
+extension RecommendedMovieViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return imageList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SameMovieTableViewCell.id, for: indexPath) as! SameMovieTableViewCell
+        cell.collectionView.delegate = self
+        cell.collectionView.dataSource = self
+        cell.collectionView.tag = indexPath.row
+        cell.collectionView.register(SameMovieCollectionViewCell.self, forCellWithReuseIdentifier: SameMovieCollectionViewCell.id)
+        cell.setTitle(titleList[indexPath.row])
+        cell.collectionView.reloadData()
+        return cell
+    }
+    
+    
+}
 extension RecommendedMovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch collectionView.tag {
-        case 0:
-            return sameMovieList.count
-        case 1:
-            return recommendMovieList.count
-        case 2:
-            return postMovieList.count
-        default:
-            return 0
-        }
-        
+        return imageList[collectionView.tag].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch collectionView.tag{
-        case 0 :
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SameMovieCollectionViewCell.id, for: indexPath) as! SameMovieCollectionViewCell
-            let data = sameMovieList[indexPath.item].poster_path
-            cell.setUpData(data)
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SameMovieCollectionViewCell.id, for: indexPath) as! SameMovieCollectionViewCell
-            let data = recommendMovieList[indexPath.item].poster_path
-            cell.setUpData(data)
-            return cell
-        case 2:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SameMovieCollectionViewCell.id, for: indexPath) as! SameMovieCollectionViewCell
-            let data = postMovieList[indexPath.item].file_path
-            cell.setUpData(data)
-            return cell
-        default:
-            return UICollectionViewCell()
-        }
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SameMovieCollectionViewCell.id, for: indexPath) as! SameMovieCollectionViewCell
+        let data = imageList[collectionView.tag][indexPath.item]
+        cell.setUpData(data)
+        return cell
+        
         
     }
     

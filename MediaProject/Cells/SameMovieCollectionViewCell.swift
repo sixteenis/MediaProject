@@ -25,7 +25,6 @@ class SameMovieCollectionViewCell: UICollectionViewCell {
     }
     override func layoutSublayers(of layer: CALayer) {
         super.layoutSublayers(of: layer)
-        
         postImage.layer.cornerRadius = 15
     }
     // MARK: - Layout 부분
@@ -37,8 +36,6 @@ class SameMovieCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI 세팅 부분 (정적)
     func setUpUI() {
-//        contentView.clipsToBounds = true
-//        contentView.backgroundColor = .white
         postImage.clipsToBounds = true
         postImage.contentMode = .scaleAspectFill
     }

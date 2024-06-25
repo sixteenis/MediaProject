@@ -87,6 +87,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource{
         let vc = RecommendedMovieViewController()
         vc.movieid = movieList[indexPath.row].id
         vc.navTitle = movieList[indexPath.row].title
+        print(movieList[indexPath.row].id)
         navigationController?.pushViewController(vc, animated: true)
     }
     
