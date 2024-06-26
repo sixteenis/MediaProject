@@ -9,16 +9,16 @@ import Foundation
 import Alamofire
 
 enum TMDBRequest {
-    case sameMovie(movieID: String)
-    case recommendMovie(movieID: String)
-    case poster(movieID: String)
+    case sameMovie
+    case recommendMovie
+    case poster
     
     var filterStyle: String {
         switch self {
         case .sameMovie:
             return "similar"
         case .recommendMovie:
-            return "similar" // Maybe a typo; should be different if needed
+            return "recommendations" // Maybe a typo; should be different if needed
         case .poster:
             return "images"
         }

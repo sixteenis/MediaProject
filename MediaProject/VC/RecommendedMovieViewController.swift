@@ -39,39 +39,54 @@ class RecommendedMovieViewController: UIViewController {
         //1
         group.enter()
         DispatchQueue.global().async {
-            self.network.callRequset(moveId: self.movieid, moiveFilter: .same) { data in
-                if let data = data {
-                    // MARK: - 지금은 추가로 넣지만 나중에는 교체해주는 것도 생각해야됨~
-                    data.forEach{ i in
-                        self.imageList[0].append(i.poster_path)
+            self.network.callMovieRequset(movieId: self.movieid, movieEnum: .sameMovie) { data,error in
+                if let error = error {
+                    print(error)
+                }else{
+                    if let data = data {
+                        // MARK: - 지금은 추가로 넣지만 나중에는 교체해주는 것도 생각해야됨~
+                        data.forEach{ i in
+                            self.imageList[0].append(i.poster_path)
+                        }
                     }
+                    group.leave()
                 }
-                group.leave()
             }
         }
+        
+        
         //2
         group.enter()
         DispatchQueue.global().async {
-            self.network.callRequset(moveId: self.movieid, moiveFilter: .recommend) { data in
-                if let data = data {
-                    // MARK: - 지금은 추가로 넣지만 나중에는 교체해주는 것도 생각해야됨~
-                    data.forEach{ i in
-                        self.imageList[1].append(i.poster_path)
+            self.network.callMovieRequset(movieId: self.movieid, movieEnum: .recommendMovie) { data,error in
+                if let error = error {
+                    print(error)
+                }else{
+                    if let data = data {
+                        // MARK: - 지금은 추가로 넣지만 나중에는 교체해주는 것도 생각해야됨~
+                        data.forEach{ i in
+                            self.imageList[1].append(i.poster_path)
+                        }
                     }
+                    group.leave()
                 }
-                group.leave()
             }
         }
         //3
         group.enter()
         DispatchQueue.global().async {
-            self.network.callRequsetPost(moveId: self.movieid, moiveFilter: .poster) { data in
-                if let data = data {
-                    data.forEach{ i in
-                        self.imageList[2].append(i.file_path)
+            self.network.callPosterRequset(movieId: self.movieid, movieEnum: .poster) { data, error in
+                if let error = error {
+                    print(error)
+                }else{
+                    if let data = data {
+                        // MARK: - 지금은 추가로 넣지만 나중에는 교체해주는 것도 생각해야됨~
+                        data.forEach{ i in
+                            self.imageList[2].append(i.file_path)
+                        }
                     }
+                    group.leave()
                 }
-                group.leave()
             }
         }
         
@@ -84,7 +99,7 @@ class RecommendedMovieViewController: UIViewController {
     // MARK: - connect 부분
     func setUpHierarch() {
         view.addSubview(tableView)
-
+        
     }
     
     // MARK: - Layout 부분
