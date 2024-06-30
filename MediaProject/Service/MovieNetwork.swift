@@ -19,7 +19,7 @@ class MovieNetwork {
     
     private init() {}
     // MARK: - 통신 부분
-    func callMovieRequset(movieId: Int, movieEnum: TMDBRequest, page: Int = 1, completionHandler: @escaping ([RecommendMovies]?,String?) -> Void) {
+    func callMovieRequset<T:Decodable>(movieId: Int, movieEnum: TMDBRequest, page: Int = 1,decodeType: T.Type, completionHandler: @escaping (T?,String?) -> Void) {
         let url = movieEnum.requestURL(movieID: String(movieId))
         let header: HTTPHeaders = movieEnum.header
         let param: Parameters = [
@@ -27,29 +27,10 @@ class MovieNetwork {
         ]
         AF.request(url,method: .get,parameters: param, headers: header)
             .validate(statusCode: 200..<500)
-            .responseDecodable(of: RecommendMovieModel.self) {respons in
+            .responseDecodable(of: T.self) {respons in
                 switch respons.result{
                 case .success(let value):
-                    completionHandler(value.results,nil)
-                    
-                case .failure(_):
-                    completionHandler(nil,"에러")
-                }
-            }
-    }
-    // MARK: - 통신 부분
-    func callPosterRequset(movieId: Int, movieEnum: TMDBRequest, page: Int = 1, completionHandler: @escaping ([Posts]?,String?) -> Void) {
-        let url = movieEnum.requestURL(movieID: String(movieId))
-        let header: HTTPHeaders = movieEnum.header
-        let param: Parameters = [
-            "page": page
-        ]
-        AF.request(url,method: .get,parameters: param, headers: header)
-            .validate(statusCode: 200..<500)
-            .responseDecodable(of: PostModel.self) {respons in
-                switch respons.result{
-                case .success(let value):
-                    completionHandler(value.posters,nil)
+                    completionHandler(value,nil)
                     
                 case .failure(_):
                     completionHandler(nil,"에러")

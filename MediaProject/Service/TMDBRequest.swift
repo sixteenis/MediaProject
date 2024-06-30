@@ -18,7 +18,7 @@ enum TMDBRequest {
         case .sameMovie:
             return "similar"
         case .recommendMovie:
-            return "recommendations" // Maybe a typo; should be different if needed
+            return "recommendations" 
         case .poster:
             return "images"
         }

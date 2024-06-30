@@ -39,13 +39,12 @@ class RecommendedMovieViewController: UIViewController {
         //1
         group.enter()
         DispatchQueue.global().async {
-            self.network.callMovieRequset(movieId: self.movieid, movieEnum: .sameMovie) { data,error in
+            self.network.callMovieRequset(movieId: self.movieid, movieEnum: .sameMovie,decodeType: RecommendMovieModel.self) { data,error in
                 if let error = error {
                     print(error)
                 }else{
                     if let data = data {
-                        // MARK: - 지금은 추가로 넣지만 나중에는 교체해주는 것도 생각해야됨~
-                        data.forEach{ i in
+                        data.results.forEach { i in
                             self.imageList[0].append(i.poster_path)
                         }
                     }
@@ -58,13 +57,12 @@ class RecommendedMovieViewController: UIViewController {
         //2
         group.enter()
         DispatchQueue.global().async {
-            self.network.callMovieRequset(movieId: self.movieid, movieEnum: .recommendMovie) { data,error in
+            self.network.callMovieRequset(movieId: self.movieid, movieEnum: .recommendMovie, decodeType: RecommendMovieModel.self) { data,error in
                 if let error = error {
                     print(error)
                 }else{
                     if let data = data {
-                        // MARK: - 지금은 추가로 넣지만 나중에는 교체해주는 것도 생각해야됨~
-                        data.forEach{ i in
+                        data.results.forEach { i in
                             self.imageList[1].append(i.poster_path)
                         }
                     }
@@ -75,13 +73,13 @@ class RecommendedMovieViewController: UIViewController {
         //3
         group.enter()
         DispatchQueue.global().async {
-            self.network.callPosterRequset(movieId: self.movieid, movieEnum: .poster) { data, error in
+            
+            self.network.callMovieRequset(movieId: self.movieid, movieEnum: .poster,decodeType: PostModel.self) { data, error in
                 if let error = error {
                     print(error)
                 }else{
                     if let data = data {
-                        // MARK: - 지금은 추가로 넣지만 나중에는 교체해주는 것도 생각해야됨~
-                        data.forEach{ i in
+                        data.posters.forEach { i in
                             self.imageList[2].append(i.file_path)
                         }
                     }
