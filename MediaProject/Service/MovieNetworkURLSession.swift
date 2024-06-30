@@ -21,8 +21,6 @@ class MovieNetworkURLSession {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.headers = movieEnum.header
-        request.setValue("page", forHTTPHeaderField: String(page))
-        
         URLSession.shared.dataTask(with: request) { data, response, error in
             //결과, 상태코드, 에러
             guard error == nil else {

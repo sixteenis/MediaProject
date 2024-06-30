@@ -24,6 +24,7 @@ class RecommendedMovieViewController: UIViewController {
     let titleList = ["비슷한 영화", "추천 영화", "포스터"]
     
     let network = MovieNetwork.shard
+    let urlSessionNetwork = MovieNetworkURLSession.shard
     override func viewDidLoad() {
         super.viewDidLoad()
         print(movieid)
@@ -39,18 +40,39 @@ class RecommendedMovieViewController: UIViewController {
         //1
         group.enter()
         DispatchQueue.global().async {
-            self.network.callMovieRequset(movieId: self.movieid, movieEnum: .sameMovie,decodeType: RecommendMovieModel.self) { data,error in
+            print("1")
+            self.urlSessionNetwork.callRequest(id: self.movieid, movieEnum: .sameMovie, decodeType: RecommendMovieModel.self) { data, error in
+                print(data)
+                print(error)
                 if let error = error {
                     print(error)
+                    group.leave()
                 }else{
                     if let data = data {
-                        data.results.forEach { i in
-                            self.imageList[0].append(i.poster_path)
+                        data.results.forEach { image in
+                            self.imageList[0].append(image.poster_path)
+                            
                         }
+                        group.leave()
+
                     }
-                    group.leave()
+                    
                 }
+                
             }
+            //group.leave()
+            //            self.network.callMovieRequset(movieId: self.movieid, movieEnum: .sameMovie,decodeType: RecommendMovieModel.self) { data,error in
+            //                if let error = error {
+            //                    print(error)
+            //                }else{
+            //                    if let data = data {
+            //                        data.results.forEach { i in
+            //                            self.imageList[0].append(i.poster_path)
+            //                        }
+            //                    }
+            //                    group.leave()
+            //                }
+            //            }
         }
         
         
@@ -60,6 +82,8 @@ class RecommendedMovieViewController: UIViewController {
             self.network.callMovieRequset(movieId: self.movieid, movieEnum: .recommendMovie, decodeType: RecommendMovieModel.self) { data,error in
                 if let error = error {
                     print(error)
+                    group.leave()
+
                 }else{
                     if let data = data {
                         data.results.forEach { i in
@@ -77,6 +101,8 @@ class RecommendedMovieViewController: UIViewController {
             self.network.callMovieRequset(movieId: self.movieid, movieEnum: .poster,decodeType: PostModel.self) { data, error in
                 if let error = error {
                     print(error)
+                    group.leave()
+
                 }else{
                     if let data = data {
                         data.posters.forEach { i in
