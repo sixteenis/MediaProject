@@ -9,11 +9,15 @@ import UIKit
 import WebKit
 
 import SnapKit
-class VideoViewController: UIViewController {
+final class VideoViewController: UIViewController {
     let webView = WKWebView()
     var id: Int?
     let network = MovieNetwork.shard
     var url: String?
+    let errorImage = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.isHidden = true
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -27,6 +31,7 @@ class VideoViewController: UIViewController {
         network.callYoutubeRequset(movieId: id, movieEnum: .video, decodeType: VideoModel.self) { data, error in
             if error != nil {
                 print("에러")
+                
             }else{
                 if data!.results.isEmpty{
                     print("없음")

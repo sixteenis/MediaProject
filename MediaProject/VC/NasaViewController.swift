@@ -104,7 +104,7 @@ class NasaViewController: UIViewController {
         
     }
     func callrequest() {
-        let url = URL(string: "https://apod.nasa.gov/apod/image/2406/AraDragons_Taylor_4728.jpg")!
+        let url = URL(string: "https://apod.nasa.gov/apod/image/2406/AraDragons_Ta1ylor_4728.jpg")!
         let request = URLRequest(url: url)
         session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
         
@@ -144,6 +144,7 @@ extension NasaViewController: URLSessionDataDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: (any Error)?) {
         if let error = error {
             print(error)
+            imageView.image = UIImage(named: "errorImage")
         } else{
             guard let buffer = buffer else {
                 print("Buffer nil")
