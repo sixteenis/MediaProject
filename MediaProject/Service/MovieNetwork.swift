@@ -8,11 +8,6 @@
 import Foundation
 
 import Alamofire
-//enum FilterNetworkStyle: String{
-//    case same = "similar"
-//    case recommend = "recommendations"
-//    case poster = "images"
-//}
 
 final class MovieNetwork {
     static let shard = MovieNetwork()

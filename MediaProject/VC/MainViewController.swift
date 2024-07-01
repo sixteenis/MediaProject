@@ -26,9 +26,15 @@ final class MainViewController: UIViewController {
     
     // MARK: - connect 부분
     func setUpHierarch() {
+        let item = UIBarButtonItem(image: UIImage(systemName: "plus"),style: .plain,  target: self, action: #selector(nvButtonTapped))
+        navigationItem.rightBarButtonItem = item
+        
         view.addSubview(movieTableView)
     }
-    
+    @objc func nvButtonTapped() {
+        let vc = NasaViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
     // MARK: - Layout 부분
     func setUpLayout() {
         movieTableView.snp.makeConstraints { make in

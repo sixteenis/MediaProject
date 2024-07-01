@@ -16,6 +16,8 @@
 		06A2848C2C327FE8008387C1 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A2848B2C327FE8008387C1 /* VideoViewController.swift */; };
 		06A2848E2C32840A008387C1 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A2848D2C32840A008387C1 /* VideoModel.swift */; };
 		06A284912C3288F7008387C1 /* ErrorView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A284902C3288F7008387C1 /* ErrorView+.swift */; };
+		06A284942C32A41F008387C1 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 06A284932C32A41F008387C1 /* Then */; };
+		06A2849A2C32A7C9008387C1 /* NasaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A284992C32A7C9008387C1 /* NasaViewController.swift */; };
 		06CFB4EF2C2AA6E700C31D02 /* SameMovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06CFB4EE2C2AA6E700C31D02 /* SameMovieTableViewCell.swift */; };
 		06E167BA2C2C24B300FD2FE7 /* TMDBRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E167B92C2C24B300FD2FE7 /* TMDBRequest.swift */; };
 		06F52FCF2C16DD3F00487212 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F52FCE2C16DD3F00487212 /* AppDelegate.swift */; };
@@ -43,6 +45,7 @@
 		06A2848B2C327FE8008387C1 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		06A2848D2C32840A008387C1 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
 		06A284902C3288F7008387C1 /* ErrorView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ErrorView+.swift"; sourceTree = "<group>"; };
+		06A284992C32A7C9008387C1 /* NasaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NasaViewController.swift; sourceTree = "<group>"; };
 		06CFB4EE2C2AA6E700C31D02 /* SameMovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SameMovieTableViewCell.swift; sourceTree = "<group>"; };
 		06E167B92C2C24B300FD2FE7 /* TMDBRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBRequest.swift; sourceTree = "<group>"; };
 		06F52FCB2C16DD3F00487212 /* MediaProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -67,6 +70,7 @@
 				06F52FF62C17451500487212 /* Kingfisher in Frameworks */,
 				06F52FF02C17450000487212 /* SnapKit in Frameworks */,
 				06F52FF32C17450800487212 /* Alamofire in Frameworks */,
+				06A284942C32A41F008387C1 /* Then in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,8 +104,8 @@
 				06F52FE62C16DE5000487212 /* Model */,
 				06F52FE52C16DE4C00487212 /* VC */,
 				06F52FE42C16DE4400487212 /* Cells */,
-				06F52FD72C16DD4000487212 /* Assets.xcassets */,
 				06F52FD92C16DD4000487212 /* LaunchScreen.storyboard */,
+				06F52FD72C16DD4000487212 /* Assets.xcassets */,
 				06F52FDC2C16DD4000487212 /* Info.plist */,
 			);
 			path = MediaProject;
@@ -123,6 +127,7 @@
 				06F52FEA2C16DEF200487212 /* MainViewController.swift */,
 				0690BCBD2C29525F00C5EAF6 /* RecommendedMovieViewController.swift */,
 				06A2848B2C327FE8008387C1 /* VideoViewController.swift */,
+				06A284992C32A7C9008387C1 /* NasaViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -178,6 +183,7 @@
 				06F52FEF2C17450000487212 /* SnapKit */,
 				06F52FF22C17450800487212 /* Alamofire */,
 				06F52FF52C17451500487212 /* Kingfisher */,
+				06A284932C32A41F008387C1 /* Then */,
 			);
 			productName = MediaProject;
 			productReference = 06F52FCB2C16DD3F00487212 /* MediaProject.app */;
@@ -211,6 +217,7 @@
 				06F52FEE2C17450000487212 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				06F52FF12C17450800487212 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				06F52FF42C17451500487212 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				06A284922C32A41F008387C1 /* XCRemoteSwiftPackageReference "Then" */,
 			);
 			productRefGroup = 06F52FCC2C16DD3F00487212 /* Products */;
 			projectDirPath = "";
@@ -254,6 +261,7 @@
 				06A2848C2C327FE8008387C1 /* VideoViewController.swift in Sources */,
 				06A284872C312FF9008387C1 /* MovieNetworkURLSession.swift in Sources */,
 				06F52FD12C16DD3F00487212 /* SceneDelegate.swift in Sources */,
+				06A2849A2C32A7C9008387C1 /* NasaViewController.swift in Sources */,
 				06F52FED2C1744E200487212 /* WeekMovieModel.swift in Sources */,
 				0690BCC02C29592500C5EAF6 /* SameMovieCollectionViewCell.swift in Sources */,
 				06F52FEB2C16DEF200487212 /* MainViewController.swift in Sources */,
@@ -483,6 +491,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		06A284922C32A41F008387C1 /* XCRemoteSwiftPackageReference "Then" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/devxoul/Then.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		06F52FEE2C17450000487212 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -510,6 +526,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		06A284932C32A41F008387C1 /* Then */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 06A284922C32A41F008387C1 /* XCRemoteSwiftPackageReference "Then" */;
+			productName = Then;
+		};
 		06F52FEF2C17450000487212 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 06F52FEE2C17450000487212 /* XCRemoteSwiftPackageReference "SnapKit" */;
