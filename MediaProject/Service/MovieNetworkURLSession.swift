@@ -12,7 +12,7 @@ enum MovieError: Error {
     case invalidResponse
     case invalidData
 }
-class MovieNetworkURLSession {
+final class MovieNetworkURLSession {
     static let shard = MovieNetworkURLSession()
     private init() {}
     

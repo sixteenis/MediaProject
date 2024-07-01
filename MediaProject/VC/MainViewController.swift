@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SnapKit
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
     let movieTableView = UITableView()
     
     var movieList = [Movie]()

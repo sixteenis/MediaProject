@@ -8,8 +8,13 @@
 import UIKit
 
 import SnapKit
+// MARK: - 영화 담는 구조체
+struct MovieData {
+    let id: Int
+    let imageList: String
+}
 
-class RecommendedMovieViewController: UIViewController {
+final class RecommendedMovieViewController: UIViewController {
     private lazy var tableView = {
         let view = UITableView()
         view.delegate = self
@@ -20,7 +25,7 @@ class RecommendedMovieViewController: UIViewController {
     }()
     lazy var movieid = 0
     lazy var navTitle = ""
-    var imageList: [[String]] = [[],[],[]]
+    private var movieList: [[MovieData]] = [[],[],[]]
     let titleList = ["비슷한 영화", "추천 영화", "포스터"]
     
     let network = MovieNetwork.shard
@@ -42,15 +47,14 @@ class RecommendedMovieViewController: UIViewController {
         DispatchQueue.global().async {
             print("1")
             self.urlSessionNetwork.callRequest(id: self.movieid, movieEnum: .sameMovie, decodeType: RecommendMovieModel.self) { data, error in
-                print(data)
-                print(error)
                 if let error = error {
                     print(error)
                     group.leave()
                 }else{
                     if let data = data {
                         data.results.forEach { image in
-                            self.imageList[0].append(image.poster_path)
+                            let movie = MovieData(id: image.id, imageList: image.poster_path)
+                            self.movieList[0].append(movie)
                             
                         }
                         group.leave()
@@ -86,11 +90,16 @@ class RecommendedMovieViewController: UIViewController {
 
                 }else{
                     if let data = data {
-                        data.results.forEach { i in
-                            self.imageList[1].append(i.poster_path)
+                        data.results.forEach { image in
+                            let movie = MovieData(id: image.id, imageList: image.poster_path)
+                            self.movieList[1].append(movie)
+                            
                         }
+                        group.leave()
+
                     }
-                    group.leave()
+
+
                 }
             }
         }
@@ -105,11 +114,15 @@ class RecommendedMovieViewController: UIViewController {
 
                 }else{
                     if let data = data {
-                        data.posters.forEach { i in
-                            self.imageList[2].append(i.file_path)
+                        data.posters.forEach { image in
+                            let movie = MovieData(id: self.movieid, imageList: image.file_path)
+                            self.movieList[2].append(movie)
+                            
                         }
+                        group.leave()
+
                     }
-                    group.leave()
+
                 }
             }
         }
@@ -137,7 +150,7 @@ class RecommendedMovieViewController: UIViewController {
     func setUpUI() {
         navigationItem.title = navTitle
         
-        view.backgroundColor = .gray
+        view.backgroundColor = .white
         
     }
     func setUpCollection() {
@@ -150,7 +163,7 @@ class RecommendedMovieViewController: UIViewController {
 }
 extension RecommendedMovieViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return imageList.count
+        return movieList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -168,16 +181,22 @@ extension RecommendedMovieViewController: UITableViewDelegate, UITableViewDataSo
 }
 extension RecommendedMovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageList[collectionView.tag].count
+        return movieList[collectionView.tag].count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SameMovieCollectionViewCell.id, for: indexPath) as! SameMovieCollectionViewCell
-        let data = imageList[collectionView.tag][indexPath.item]
-        cell.setUpData(data)
+        let data = movieList[collectionView.tag][indexPath.item]
+        cell.setUpData(data.imageList)
         return cell
         
         
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = VideoViewController()
+        vc.id = movieList[collectionView.tag][indexPath.item].id
+        print(vc.id)
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     

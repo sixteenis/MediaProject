@@ -14,6 +14,6 @@ struct RecommendMovieModel: Codable{
 }
 struct RecommendMovies: Codable {
     let poster_path: String
-
+    let id: Int
     
 }

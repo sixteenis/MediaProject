@@ -13,6 +13,8 @@
 		0690BCC42C29679600C5EAF6 /* RecommendMovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0690BCC32C29679600C5EAF6 /* RecommendMovieModel.swift */; };
 		0690BCC62C29931F00C5EAF6 /* PostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0690BCC52C29931F00C5EAF6 /* PostModel.swift */; };
 		06A284872C312FF9008387C1 /* MovieNetworkURLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A284862C312FF9008387C1 /* MovieNetworkURLSession.swift */; };
+		06A2848C2C327FE8008387C1 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A2848B2C327FE8008387C1 /* VideoViewController.swift */; };
+		06A2848E2C32840A008387C1 /* VideoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A2848D2C32840A008387C1 /* VideoModel.swift */; };
 		06CFB4EF2C2AA6E700C31D02 /* SameMovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06CFB4EE2C2AA6E700C31D02 /* SameMovieTableViewCell.swift */; };
 		06E167BA2C2C24B300FD2FE7 /* TMDBRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E167B92C2C24B300FD2FE7 /* TMDBRequest.swift */; };
 		06F52FCF2C16DD3F00487212 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06F52FCE2C16DD3F00487212 /* AppDelegate.swift */; };
@@ -37,6 +39,8 @@
 		0690BCC32C29679600C5EAF6 /* RecommendMovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendMovieModel.swift; sourceTree = "<group>"; };
 		0690BCC52C29931F00C5EAF6 /* PostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostModel.swift; sourceTree = "<group>"; };
 		06A284862C312FF9008387C1 /* MovieNetworkURLSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNetworkURLSession.swift; sourceTree = "<group>"; };
+		06A2848B2C327FE8008387C1 /* VideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		06A2848D2C32840A008387C1 /* VideoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoModel.swift; sourceTree = "<group>"; };
 		06CFB4EE2C2AA6E700C31D02 /* SameMovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SameMovieTableViewCell.swift; sourceTree = "<group>"; };
 		06E167B92C2C24B300FD2FE7 /* TMDBRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBRequest.swift; sourceTree = "<group>"; };
 		06F52FCB2C16DD3F00487212 /* MediaProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MediaProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,9 +91,9 @@
 		06F52FCD2C16DD3F00487212 /* MediaProject */ = {
 			isa = PBXGroup;
 			children = (
-				06F52FF92C1748CA00487212 /* Extensions */,
 				06F52FCE2C16DD3F00487212 /* AppDelegate.swift */,
 				06F52FD02C16DD3F00487212 /* SceneDelegate.swift */,
+				06F52FF92C1748CA00487212 /* Extensions */,
 				06F52FE72C16DE5600487212 /* Service */,
 				06F52FE62C16DE5000487212 /* Model */,
 				06F52FE52C16DE4C00487212 /* VC */,
@@ -116,6 +120,7 @@
 			children = (
 				06F52FEA2C16DEF200487212 /* MainViewController.swift */,
 				0690BCBD2C29525F00C5EAF6 /* RecommendedMovieViewController.swift */,
+				06A2848B2C327FE8008387C1 /* VideoViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -126,6 +131,7 @@
 				06F52FEC2C1744E200487212 /* WeekMovieModel.swift */,
 				0690BCC32C29679600C5EAF6 /* RecommendMovieModel.swift */,
 				0690BCC52C29931F00C5EAF6 /* PostModel.swift */,
+				06A2848D2C32840A008387C1 /* VideoModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -238,8 +244,10 @@
 				06F52FFB2C1748E300487212 /* ReuseIdentifier+.swift in Sources */,
 				06F52FE92C16DE7D00487212 /* APIKey.swift in Sources */,
 				06F52FF82C1747E200487212 /* MovieTableViewCell.swift in Sources */,
+				06A2848E2C32840A008387C1 /* VideoModel.swift in Sources */,
 				06CFB4EF2C2AA6E700C31D02 /* SameMovieTableViewCell.swift in Sources */,
 				0690BCC42C29679600C5EAF6 /* RecommendMovieModel.swift in Sources */,
+				06A2848C2C327FE8008387C1 /* VideoViewController.swift in Sources */,
 				06A284872C312FF9008387C1 /* MovieNetworkURLSession.swift in Sources */,
 				06F52FD12C16DD3F00487212 /* SceneDelegate.swift in Sources */,
 				06F52FED2C1744E200487212 /* WeekMovieModel.swift in Sources */,

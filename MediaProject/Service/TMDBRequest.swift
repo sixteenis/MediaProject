@@ -12,6 +12,7 @@ enum TMDBRequest {
     case sameMovie
     case recommendMovie
     case poster
+    case video
     
     var filterStyle: String {
         switch self {
@@ -21,6 +22,8 @@ enum TMDBRequest {
             return "recommendations" 
         case .poster:
             return "images"
+        case .video:
+            return "videos"
         }
     }
     

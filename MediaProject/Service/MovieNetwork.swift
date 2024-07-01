@@ -14,7 +14,7 @@ import Alamofire
 //    case poster = "images"
 //}
 
-class MovieNetwork {
+final class MovieNetwork {
     static let shard = MovieNetwork()
     
     private init() {}
@@ -38,3 +38,4 @@ class MovieNetwork {
             }
     }
 }
+
