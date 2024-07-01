@@ -13,4 +13,7 @@ struct VideoModel:Decodable {
 
 struct VideoIDModel: Decodable {
     let key: String
+    var url: String {
+        return "https://www.youtube.com/watch?v=\(self.key)"
+    }
 }

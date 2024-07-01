@@ -31,6 +31,20 @@ final class MovieNetwork {
                 switch respons.result{
                 case .success(let value):
                     completionHandler(value,nil)
+                case .failure(_):
+                    completionHandler(nil,"에러")
+                }
+            }
+    }
+    func callYoutubeRequset<T:Decodable>(movieId: Int, movieEnum: TMDBRequest,decodeType: T.Type, completionHandler: @escaping (T?,String?) -> Void) {
+        let url = movieEnum.requestURL(movieID: String(movieId))
+        let header: HTTPHeaders = movieEnum.header
+        AF.request(url,method: .get, headers: header)
+            .validate(statusCode: 200..<500)
+            .responseDecodable(of: T.self) {respons in
+                switch respons.result{
+                case .success(let value):
+                    completionHandler(value,nil)
                     
                 case .failure(_):
                     completionHandler(nil,"에러")

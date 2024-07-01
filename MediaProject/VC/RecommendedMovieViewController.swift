@@ -45,11 +45,11 @@ final class RecommendedMovieViewController: UIViewController {
         //1
         group.enter()
         DispatchQueue.global().async {
-            print("1")
             self.urlSessionNetwork.callRequest(id: self.movieid, movieEnum: .sameMovie, decodeType: RecommendMovieModel.self) { data, error in
                 if let error = error {
                     print(error)
                     group.leave()
+
                 }else{
                     if let data = data {
                         data.results.forEach { image in
@@ -57,12 +57,10 @@ final class RecommendedMovieViewController: UIViewController {
                             self.movieList[0].append(movie)
                             
                         }
-                        group.leave()
-
                     }
-                    
+                    group.leave()
                 }
-                
+             //   group.leave()
             }
             //group.leave()
             //            self.network.callMovieRequset(movieId: self.movieid, movieEnum: .sameMovie,decodeType: RecommendMovieModel.self) { data,error in
@@ -87,7 +85,6 @@ final class RecommendedMovieViewController: UIViewController {
                 if let error = error {
                     print(error)
                     group.leave()
-
                 }else{
                     if let data = data {
                         data.results.forEach { image in
@@ -95,12 +92,13 @@ final class RecommendedMovieViewController: UIViewController {
                             self.movieList[1].append(movie)
                             
                         }
-                        group.leave()
+                        
 
                     }
 
-
+                    group.leave()
                 }
+                //group.leave()
             }
         }
         //3
@@ -119,11 +117,12 @@ final class RecommendedMovieViewController: UIViewController {
                             self.movieList[2].append(movie)
                             
                         }
-                        group.leave()
+                        
 
                     }
-
+                    group.leave()
                 }
+                
             }
         }
         

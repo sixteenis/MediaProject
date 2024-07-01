@@ -12,12 +12,31 @@ import SnapKit
 class VideoViewController: UIViewController {
     let webView = WKWebView()
     var id: Int?
+    let network = MovieNetwork.shard
+    var url: String?
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setUpHierarch()
         setUpLayout()
-        setUpUI()
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let id = id else { return }
+        network.callYoutubeRequset(movieId: id, movieEnum: .video, decodeType: VideoModel.self) { data, error in
+            if error != nil {
+                print("에러")
+            }else{
+                if data!.results.isEmpty{
+                    print("없음")
+                }else{
+                    self.url = data?.results[0].url
+                }
+            }
+            guard let url = self.url else {return }
+            self.setUpUI(youtube: url)
+        }
         
     }
     
@@ -34,9 +53,8 @@ class VideoViewController: UIViewController {
     }
     
     // MARK: - UI 세팅 부분
-    func setUpUI() {
-        view.backgroundColor = .white
-        let url = URL(string: "https://www.youtube.com/watch?v=sMtnrdJaPHI")!
+    func setUpUI(youtube: String) {
+        let url = URL(string: youtube)!
         let myrequest = URLRequest(url: url)
         webView.load(myrequest)
     }
